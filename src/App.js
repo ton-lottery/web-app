@@ -261,20 +261,20 @@ function App() {
                             {t("out_amount") + " " + (Number((parseInt(getOutAmount, 16) / 1000000000))) + '💎'}
                         </Typography>}
                         {getGamePlayed && <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                            {"Всего игр: " + (Number((parseInt(getGamePlayed, 16))))}
+                            {t("total_games") + " " + (Number((parseInt(getGamePlayed, 16))))}
                         </Typography>}
                         {!isNaN(jackpot) && <Typography variant="h5" component="div">
-                            {"Джекпот:  " + (jackpot) + '💎'}
+                            {t("jackpot") + "  " + (jackpot) + '💎'}
                         </Typography>}
                         {(numbers.length < 6) ? <Typography sx={{mb: 1.5}} color="text.secondary">
-                                {"Осталось выбрать номеров: " + (Math.max(6 - numbers.length, 0))}
+                                {t("need_choose_numbers") + " " + (Math.max(6 - numbers.length, 0))}
                             </Typography> :
                             <Typography sx={{mb: 1.5}} color="text.secondary">
-                                {"Выберете больше номеров, чтобы увеличить шансы на выигрыш"}
+                                {t("choose_more_numbers")}
                             </Typography>
                         }
                         <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                            {"Шансы на выигрыш: x" + (Math.round(price / 0.2))}
+                            {t("win_chance") + " x" + (Math.round(price / 0.2))}
                         </Typography>
                         {
                             [...Array(9)].map((e, k) => {
@@ -315,14 +315,14 @@ function App() {
                                 disabled={numbers.length < 6 || numbers.length > 16}
                                 href={`https://test.tonhub.com/transfer/kQC7sRCtX3t4-ubU6mn2xAX0TVQ5MC3D4ck8QhkYf1R1Z7qL?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
                             >
-                                Купить за {price}💎
+                                {t("buy_button")} {price}💎
                             </Button>
-                            <Tooltip title="Очистить выбор">
+                            <Tooltip title={t("clear_choice")}>
                                 <IconButton sx={{ml: 8}} disabled={numbers.length === 0} onClick={() => setNumbers([])}>
                                     <ClearIcon/>
                                 </IconButton>
                             </Tooltip>
-                            <Tooltip title="Выбрать случайно">
+                            <Tooltip title={t("random_choice")}>
                                 <IconButton onClick={() => setNumbers(getRandom())}>
                                     <CasinoIcon/>
                                 </IconButton>
@@ -334,8 +334,8 @@ function App() {
                             <Table size="small" aria-label="a dense table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>Угадано номеров</TableCell>
-                                        <TableCell align="right">Выигрыш</TableCell>
+                                        <TableCell>{t("true_numbers")}</TableCell>
+                                        <TableCell align="right">{t("prize_amount")}</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
