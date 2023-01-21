@@ -1,3 +1,13 @@
 {
-  "out_amount": "Already paid:"
+  "out_amount": "Already paid:",
+  "total_games": "Всего игр:",
+  "jackpot": "Джекпот:",
+  "need_choose_numbers": "Осталось выбрать номеров:",
+  "choose_more_numbers": "Выберете больше номеров, чтобы увеличить шансы на выигрыш",
+  "win_chance": "Шансы на выигрыш:",
+  "buy_button": "Купить за",
+  "clear_choice": "Очистить выбор",
+  "random_choice": "Выбрать случайно",
+  "true_numbers": "Угадано номеров",
+  "prize_amount": "Выигрыш"
 }
