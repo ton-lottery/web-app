@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     Box,
     Button,
@@ -23,6 +23,7 @@ import {
 import factorialize from "./utils";
 import ClearIcon from '@mui/icons-material/Clear';
 import CasinoIcon from '@mui/icons-material/Casino';
+import {useTranslation} from 'react-i18next';
 
 var winKf = [
     [
@@ -105,6 +106,7 @@ var winKf = [
 ]
 
 function App() {
+    const {t, i18n, ready} = useTranslation();
     const [isRun, setIsRun] = useState(false);
     const [balance, setBalance] = useState(localStorage.getItem('balance'));
     const [getGuaranteedPrize, setGetGuaranteedPrize] = useState(localStorage.getItem('getGuaranteedPrize'));
@@ -161,7 +163,6 @@ function App() {
         }
     }, [getBet, numbers, setPrice]);
 
-
     const fetchFunc = function (methodName) {
         return fetch("https://testnet.toncenter.com/api/v2/runGetMethod", {
             method: 'POST',
@@ -177,7 +178,6 @@ function App() {
             return res.json()
         })
     }
-
 
     function pad(num, size) {
         num = num.toString();
@@ -252,13 +252,13 @@ function App() {
     }, [balance, getBet, getGamePlayed, getGuaranteedPrize, getOutAmount, getOwnerFee, isRun])
 
     return (
-        <Container component="main" maxWidth="xs">
+        ready && <Container component="main" maxWidth="xs">
             <CssBaseline/>
             <Box sx={{mt: 4}}>
                 <Card>
                     <CardContent>
                         {getOutAmount && <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                            {"Уже выплачено: " + (Number((parseInt(getOutAmount, 16) / 1000000000))) + '💎'}
+                            {t("out_amount") + " " + (Number((parseInt(getOutAmount, 16) / 1000000000))) + '💎'}
                         </Typography>}
                         {getGamePlayed && <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
                             {"Всего игр: " + (Number((parseInt(getGamePlayed, 16))))}
