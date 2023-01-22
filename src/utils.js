@@ -1,3 +1,5 @@
+import React from "react";
+
 function factorialize(num) {
     if (num < 0)
         return -1;

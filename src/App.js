@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {
+    AppBar,
     Box,
     Button,
     Card,
@@ -9,7 +10,9 @@ import {
     CssBaseline,
     Grid,
     IconButton,
+    MenuItem,
     Paper,
+    Select,
     Table,
     TableBody,
     TableCell,
@@ -17,13 +20,18 @@ import {
     TableHead,
     TableRow,
     ToggleButton,
+    Toolbar,
     Tooltip,
-    Typography
+    Typography,
+    useTheme
 } from "@mui/material";
 import factorialize from "./utils";
 import ClearIcon from '@mui/icons-material/Clear';
 import CasinoIcon from '@mui/icons-material/Casino';
 import {useTranslation} from 'react-i18next';
+import withRoot, {ColorModeContext} from "./withRoot";
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 var winKf = [
     [
@@ -104,9 +112,14 @@ var winKf = [
         155400
     ]
 ]
+const languages = [{code: "en", name: "English"}, {code: "ru", name: "Русский"}]
 
 function App() {
     const {t, i18n, ready} = useTranslation();
+    const theme = useTheme();
+    const colorMode = React.useContext(ColorModeContext);
+    document.body.dir = i18n.dir();
+    const [locale, setLocale] = React.useState(localStorage.getItem('lng') || languages.find((value) => value.code === 'en').code);
     const [isRun, setIsRun] = useState(false);
     const [balance, setBalance] = useState(localStorage.getItem('balance'));
     const [getGuaranteedPrize, setGetGuaranteedPrize] = useState(localStorage.getItem('getGuaranteedPrize'));
@@ -118,6 +131,18 @@ function App() {
     const [numbers, setNumbers] = useState([]);
     const [price, setPrice] = useState(0.2);
 
+    const changeLanguage = (lng) => {
+        setLocale(lng)
+        localStorage.setItem('lng', lng)
+        i18n.changeLanguage(lng)
+        document.body.dir = i18n.dir();
+        theme.direction = i18n.dir();
+    }
+
+    useEffect(() => {
+        changeLanguage(locale)
+    }, [])
+
     const getRandom = () => {
         const arr = [];
         while (arr.length < 6) {
@@ -128,7 +153,6 @@ function App() {
     }
 
     const getPrizeByCount = (count, choose) => {
-        debugger;
         var prize = (winKf[choose][count] * (parseInt(getBet, 16)))
         var jackpot = (parseInt(balance, 16) - parseInt(getGuaranteedPrize, 16) - parseInt(getOwnerFee, 16));
         if (count === 4) {
@@ -252,19 +276,47 @@ function App() {
     }, [balance, getBet, getGamePlayed, getGuaranteedPrize, getOutAmount, getOwnerFee, isRun])
 
     return (
-        ready && <Container component="main" maxWidth="xs">
-            <CssBaseline/>
-            <Box sx={{mt: 4}}>
-                <Card>
-                    <CardContent>
-                        {getOutAmount && <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                            {t("out_amount") + " " + (Number((parseInt(getOutAmount, 16) / 1000000000))) + '💎'}
-                        </Typography>}
-                        {getGamePlayed && <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                            {t("total_games") + " " + (Number((parseInt(getGamePlayed, 16))))}
-                        </Typography>}
-                        {!isNaN(jackpot) && <Typography variant="h5" component="div">
-                            {t("jackpot") + "  " + (jackpot) + '💎'}
+        ready && <>
+            <Box sx={{flexGrow: 1}}>
+                <AppBar position="static">
+                    <Toolbar>
+                        <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                            TON LOTTERY
+                        </Typography>
+                        <Select
+                            size="small"
+                            value={locale}
+                            label="Language"
+                            onChange={(e) => {
+                                changeLanguage(e.target.value)
+                            }}
+                        >
+                            {languages.map((lang) => {
+                                return (<MenuItem key={lang.code} value={lang.code}>{lang.name}</MenuItem>)
+                            })}
+
+                        </Select>
+                        <Tooltip title={theme.palette.mode === 'dark' ? t("light_mode") : t("dark_mode")}>
+                            <IconButton sx={{ml: 2}} onClick={colorMode.toggleColorMode} color="inherit">
+                                {theme.palette.mode === 'dark' ? <Brightness7Icon/> : <Brightness4Icon/>}
+                            </IconButton>
+                        </Tooltip>
+                    </Toolbar>
+                </AppBar>
+            </Box>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline/>
+                <Box sx={{mt: 2}}>
+                    <Card>
+                        <CardContent>
+                            {getOutAmount && <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
+                                {t("out_amount") + " " + (Number((parseInt(getOutAmount, 16) / 1000000000))) + '💎'}
+                            </Typography>}
+                            {getGamePlayed && <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
+                                {t("total_games") + " " + (Number((parseInt(getGamePlayed, 16))))}
+                            </Typography>}
+                            {!isNaN(jackpot) && <Typography variant="h5" component="div">
+                                {t("jackpot") + "  " + (jackpot) + '💎'}
                         </Typography>}
                         {(numbers.length < 6) ? <Typography sx={{mb: 1.5}} color="text.secondary">
                                 {t("need_choose_numbers") + " " + (Math.max(6 - numbers.length, 0))}
@@ -313,6 +365,7 @@ function App() {
                             <Button
                                 size="small"
                                 disabled={numbers.length < 6 || numbers.length > 16}
+                                variant="contained"
                                 href={`https://test.tonhub.com/transfer/kQC7sRCtX3t4-ubU6mn2xAX0TVQ5MC3D4ck8QhkYf1R1Z7qL?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
                             >
                                 {t("buy_button")} {price}💎
@@ -373,10 +426,10 @@ function App() {
                             </Table>
                         </TableContainer>
                     </CardContent>}
-                </Card>
-            </Box>
-        </Container>
+                    </Card>
+                </Box>
+            </Container></>
     );
 }
 
-export default App;
+export default withRoot(App);
