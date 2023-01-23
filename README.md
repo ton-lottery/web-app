@@ -1,1 +1,7 @@
 [![Crowdin](https://badges.crowdin.net/ton-lottery/localized.svg)](https://crowdin.com/project/ton-lottery)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/ton-lottery/web-app/docker-image.yml)
+![GitHub top language](https://img.shields.io/github/languages/top/ton-lottery/web-app)
+![Lines of code](https://img.shields.io/tokei/lines/github/ton-lottery/web-app)
+![GitHub issues](https://img.shields.io/github/issues/ton-lottery/web-app)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/ton-lottery/web-app)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/ton-lottery/web-app)
