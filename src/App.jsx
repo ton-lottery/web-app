@@ -2,6 +2,8 @@
 // noinspection JSValidateTypes
 
 import React, { useCallback, useEffect, useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Helmet } from 'react-helmet';
 import LanguageIcon from '@mui/icons-material/Language';
 import {
   AppBar,
@@ -305,6 +307,10 @@ function App() {
   // noinspection JSCheckFunctionSignatures
   return (
     ready && (
+    <>
+      <Helmet>
+        <title>{t('title')}</title>
+      </Helmet>
       <div style={theme.palette.mode === 'dark' ? stylesDark.background : stylesLight.background}>
         <Box
           sx={{ flexGrow: 1 }}
@@ -496,6 +502,7 @@ function App() {
           </Box>
         </Container>
       </div>
+    </>
     )
   );
 }
