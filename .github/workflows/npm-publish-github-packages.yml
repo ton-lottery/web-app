@@ -23,13 +23,24 @@ jobs:
     permissions:
       contents: read
       packages: write
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          registry-url: https://npm.pkg.github.com/
-      - run: npm ci
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 18
+                  registry-url: 'https://npm.pkg.github.com'
+                  cache: npm
+            
+            - name: Install npm dependencies
+              run: npm ci
+            
+            - name: Publish to github registry
+              run: |
+                # Change publish registry
+                echo "$(jq '.publishConfig.registry = "https://npm.pkg.github.com"' package.json)" > package.json
+                # Add organisation scope to package name
+                echo "$( jq '.name = "@ton-lottery/web-app"' package.json )" > package.json
+                # And publish this boy 
+                npm publish --@ton-lotterye:registry=https://npm.pkg.github.com
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
