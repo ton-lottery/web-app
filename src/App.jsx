@@ -2,6 +2,7 @@
 // noinspection JSValidateTypes
 
 import React, { useCallback, useEffect, useState } from 'react';
+import LanguageIcon from '@mui/icons-material/Language';
 import {
   AppBar,
   Box,
@@ -324,6 +325,11 @@ function App() {
                 {languages.map((lang) => (<MenuItem key={lang.code} value={lang.code}>{lang.name}</MenuItem>))}
 
               </Select>
+              <Tooltip title={t('translate_help')}>
+                <IconButton sx={{ ml: 2 }} href="https://crowdin.com/project/ton-lottery" target="_blank">
+                  <LanguageIcon />
+                </IconButton>
+              </Tooltip>
               <Tooltip title={theme.palette.mode === 'dark' ? t('light_mode') : t('dark_mode')}>
                 <IconButton sx={{ ml: 2 }} onClick={colorMode.toggleColorMode} color="inherit">
                   {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
@@ -400,6 +406,7 @@ function App() {
                     size="small"
                     disabled={numbers.length < 6 || numbers.length > 16}
                     variant="contained"
+                    target="_blank"
                     href={`https://test.tonhub.com/transfer/kQC7sRCtX3t4-ubU6mn2xAX0TVQ5MC3D4ck8QhkYf1R1Z7qL
                   ?amount=${price * 1000000000}
                   &text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
