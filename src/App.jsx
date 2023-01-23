@@ -4,6 +4,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Helmet } from 'react-helmet';
+import TelegramIcon from '@mui/icons-material/Telegram';
 import LanguageIcon from '@mui/icons-material/Language';
 import {
   AppBar,
@@ -317,9 +318,7 @@ function App() {
         >
           <AppBar position="static">
             <Toolbar>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                TON LOTTERY
-              </Typography>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} />
               <Select
                 size="small"
                 value={locale}
@@ -334,6 +333,11 @@ function App() {
               <Tooltip title={t('translate_help')}>
                 <IconButton sx={{ ml: 2 }} href="https://crowdin.com/project/ton-lottery" target="_blank">
                   <LanguageIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title={t('telegram_support')}>
+                <IconButton sx={{ ml: 2 }} href="https://t.me/tonlottery_support_bot" target="_blank">
+                  <TelegramIcon />
                 </IconButton>
               </Tooltip>
               <Tooltip title={theme.palette.mode === 'dark' ? t('light_mode') : t('dark_mode')}>
