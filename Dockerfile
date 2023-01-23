@@ -1,4 +1,4 @@
-FROM lts as build
+FROM node:lts as build
 WORKDIR /app
 COPY package.json /app/package.json
 RUN npm install --only=prod
