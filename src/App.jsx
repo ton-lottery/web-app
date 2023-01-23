@@ -358,7 +358,7 @@ function App() {
                   </Typography>
                 ) : (
                   <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    {t('choose_more_numbers')}
+                    {t('choose_more_numbers_v2')}
                   </Typography>
                 )}
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
