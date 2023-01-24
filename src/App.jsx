@@ -1,7 +1,9 @@
-/* eslint-disable no-restricted-globals */
-// noinspection JSValidateTypes
+/* eslint-disable no-restricted-globals,max-len,react/no-array-index-key */
+// noinspection JSValidateTypes,RequiredAttributes
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+  forwardRef, useCallback, useEffect, useState,
+} from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Helmet } from 'react-helmet';
 import TelegramIcon from '@mui/icons-material/Telegram';
@@ -9,17 +11,17 @@ import LanguageIcon from '@mui/icons-material/Language';
 import {
   AppBar,
   Box,
-  Button,
+  Button, ButtonGroup,
   Card,
   CardActions,
   CardContent,
   Container,
-  CssBaseline,
+  CssBaseline, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
   Grid,
   IconButton,
   MenuItem,
   Paper,
-  Select,
+  Select, Slide,
   Table,
   TableBody,
   TableCell,
@@ -37,6 +39,8 @@ import CasinoIcon from '@mui/icons-material/Casino';
 import { useTranslation } from 'react-i18next';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import QrCodeWithLogo from 'qrcode-with-logos';
 import withRoot, { ColorModeContext } from './withRoot';
 import factorialize from './utils';
 
@@ -120,6 +124,8 @@ const winKf = [
   ],
 ];
 const languages = [{ code: 'en', name: 'English' }, { code: 'ru', name: 'Русский' }];
+// eslint-disable-next-line react/jsx-props-no-spreading,react/display-name
+const Transition = forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
 function App() {
   const { t, i18n, ready } = useTranslation();
@@ -139,6 +145,37 @@ function App() {
   const [jackpot, setJackpot] = useState(undefined);
   const [numbers, setNumbers] = useState([]);
   const [price, setPrice] = useState(0.2);
+  const [openBuyDialog, setOpenBuyDialog] = React.useState(false);
+
+  function pad(num, size) {
+    // eslint-disable-next-line no-param-reassign
+    num = num.toString();
+    // eslint-disable-next-line no-param-reassign
+    while (num.length < size) num = `0${num}`;
+    return num;
+  }
+
+  const handleClickOpen = () => {
+    // noinspection JSCheckFunctionSignatures
+    new QrCodeWithLogo({
+      canvas: document.getElementById('qrcode'),
+      /* eslint-disable-next-line max-len */
+      content: `ton://transfer/kQC7sRCtX3t4-ubU6mn2xAX0TVQ5MC3D4ck8QhkYf1R1Z7qL?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`,
+      download: true,
+      width: '100%',
+      image: document.getElementById('image'),
+      logo: {
+        src: 'https://avatars1.githubusercontent.com/u/55018343?s=460&v=4',
+      },
+    }).toImage().then((r) => r);
+    setOpenBuyDialog(true);
+  };
+
+  const handleClose = () => {
+    setOpenBuyDialog(false);
+    const context = document.getElementById('qrcode').getContext('qrcode');
+    context.clearRect(0, 0, document.getElementById('qrcode').width, document.getElementById('qrcode').height);
+  };
 
   /* eslint-disable-next-line max-len */ // noinspection SpellCheckingInspection
   const backgroundImage = 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'400\' viewBox=\'0 0 800 800\'%3E%3Cg fill=\'none\' stroke=\'%23404\' stroke-width=\'1\'%3E%3Cpath d=\'M769 229L1037 260.9M927 880L731 737 520 660 309 538 40 599 295 764 126.5 879.5 40 599-197 493 102 382-31 229 126.5 79.5-69-63\'/%3E%3Cpath d=\'M-31 229L237 261 390 382 603 493 308.5 537.5 101.5 381.5M370 905L295 764\'/%3E%3Cpath d=\'M520 660L578 842 731 737 840 599 603 493 520 660 295 764 309 538 390 382 539 269 769 229 577.5 41.5 370 105 295 -36 126.5 79.5 237 261 102 382 40 599 -69 737 127 880\'/%3E%3Cpath d=\'M520-140L578.5 42.5 731-63M603 493L539 269 237 261 370 105M902 382L539 269M390 382L102 382\'/%3E%3Cpath d=\'M-222 42L126.5 79.5 370 105 539 269 577.5 41.5 927 80 769 229 902 382 603 493 731 737M295-36L577.5 41.5M578 842L295 764M40-201L127 80M102 382L-261 269\'/%3E%3C/g%3E%3Cg fill=\'%23505\'%3E%3Ccircle cx=\'769\' cy=\'229\' r=\'5\'/%3E%3Ccircle cx=\'539\' cy=\'269\' r=\'5\'/%3E%3Ccircle cx=\'603\' cy=\'493\' r=\'5\'/%3E%3Ccircle cx=\'731\' cy=\'737\' r=\'5\'/%3E%3Ccircle cx=\'520\' cy=\'660\' r=\'5\'/%3E%3Ccircle cx=\'309\' cy=\'538\' r=\'5\'/%3E%3Ccircle cx=\'295\' cy=\'764\' r=\'5\'/%3E%3Ccircle cx=\'40\' cy=\'599\' r=\'5\'/%3E%3Ccircle cx=\'102\' cy=\'382\' r=\'5\'/%3E%3Ccircle cx=\'127\' cy=\'80\' r=\'5\'/%3E%3Ccircle cx=\'370\' cy=\'105\' r=\'5\'/%3E%3Ccircle cx=\'578\' cy=\'42\' r=\'5\'/%3E%3Ccircle cx=\'237\' cy=\'261\' r=\'5\'/%3E%3Ccircle cx=\'390\' cy=\'382\' r=\'5\'/%3E%3C/g%3E%3C/svg%3E")';
@@ -226,17 +263,9 @@ function App() {
     body: JSON.stringify({
       address: 'kQC7sRCtX3t4-ubU6mn2xAX0TVQ5MC3D4ck8QhkYf1R1Z7qL',
       method: methodName,
-      stack: [['num', 3]],
+      stack: [['num', 1]],
     }),
   }).then((res) => res.json());
-
-  function pad(num, size) {
-    // eslint-disable-next-line no-param-reassign
-    num = num.toString();
-    // eslint-disable-next-line no-param-reassign
-    while (num.length < size) num = `0${num}`;
-    return num;
-  }
 
   function sleep(ms) {
     // eslint-disable-next-line no-promise-executor-return
@@ -257,31 +286,31 @@ function App() {
         setBalance(res);
         localStorage.setItem('balance', res);
       }).then(() => {
-        sleep(1130).then(() => {
+        sleep(1500).then(() => {
           fetchFunc(methods[1]).then((json) => {
             const res = json.result.stack[1][1];
             setGetGuaranteedPrize(res);
             localStorage.setItem('getGuaranteedPrize', res);
           }).then(() => {
-            sleep(1130).then(() => {
+            sleep(1500).then(() => {
               fetchFunc(methods[2]).then((json) => {
                 const res = json.result.stack[1][1];
                 setGetOwnerFee(res);
                 localStorage.setItem('getOwnerFee', res);
               }).then(() => {
-                sleep(1130).then(() => {
+                sleep(1500).then(() => {
                   fetchFunc(methods[3]).then((json) => {
                     const res = json.result.stack[1][1];
                     setGetBet(res);
                     localStorage.setItem('getBet', res);
                   }).then(() => {
-                    sleep(1130).then(() => {
+                    sleep(1500).then(() => {
                       fetchFunc(methods[4]).then((json) => {
                         const res = json.result.stack[1][1];
                         setGetOutAmount(res);
                         localStorage.setItem('getOutAmount', res);
                       }).then(() => {
-                        sleep(1130).then(() => {
+                        sleep(1500).then(() => {
                           fetchFunc(methods[5]).then((json) => {
                             const res = json.result.stack[1][1];
                             setGetGamePlayed(res);
@@ -301,16 +330,16 @@ function App() {
     if (!isRun) {
       setIsRun(true);
       fillData();
-      setInterval(fillData, 15000);
+      setInterval(fillData, 18000);
     }
   }, [balance, getBet, getGamePlayed, getGuaranteedPrize, getOutAmount, getOwnerFee, isRun]);
 
-  // noinspection JSCheckFunctionSignatures
+  // noinspection JSCheckFunctionSignatures,RequiredAttributes
   return (
     ready && (
     <>
       <Helmet>
-        <title>{t('title')}</title>
+        <title>{t('title_v2')}</title>
       </Helmet>
       <div style={theme.palette.mode === 'dark' ? stylesDark.background : stylesLight.background}>
         <Box
@@ -385,13 +414,13 @@ function App() {
                         <Grid
                           container
                           wrap="nowrap"
-                          key={e}
+                          key={k}
                         >
                           {
                               [...Array(5)].map((el, i) => (
                                 <ToggleButton
                                   value={(i + 1) + (5 * k)}
-                                  key={(el + 1) + (5 * e)}
+                                  key={(i + 1) + (5 * k)}
                                   disabled={numbers.length > 15 && !numbers.includes((i + 1) + (5 * k))}
                                   size="small"
                                   fullWidth
@@ -416,16 +445,60 @@ function App() {
                     size="small"
                     disabled={numbers.length < 6 || numbers.length > 16}
                     variant="contained"
-                    target="_blank"
-                    href={`https://test.tonhub.com/transfer/kQC7sRCtX3t4-ubU6mn2xAX0TVQ5MC3D4ck8QhkYf1R1Z7qL
-                  ?amount=${price * 1000000000}
-                  &text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
+                    onClick={handleClickOpen}
                   >
                     {t('buy_button')}
                     {' '}
                     {price}
                     💎
                   </Button>
+                  <Dialog
+                    open={openBuyDialog}
+                    TransitionComponent={Transition}
+                    keepMounted
+                    onClose={handleClose}
+                  >
+                    <DialogTitle>
+                      {t('buy_button')}
+                      {' '}
+                      {price}
+                      💎
+                    </DialogTitle>
+                    <DialogContent>
+                      <DialogContentText>
+                        {t('your_numbers')}
+                        {' '}
+                        {numbers.map((num) => pad(num, 2)).join(', ')}
+                      </DialogContentText>
+                      <canvas id="qrcode" style={{ padding: 0, margin: 'auto', display: 'block' }} />
+                    </DialogContent>
+                    <DialogActions>
+                      <ButtonGroup size="small">
+                        <Button
+                          variant="contained"
+                          target="_blank"
+                          href={`https://app.tonkeeper.com/transfer/kQC7sRCtX3t4-ubU6mn2xAX0TVQ5MC3D4ck8QhkYf1R1Z7qL?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
+                        >
+                          TonKeeper
+                        </Button>
+                        <Button
+                          variant="contained"
+                          target="_blank"
+                          href={`https://test.tonhub.com/transfer/kQC7sRCtX3t4-ubU6mn2xAX0TVQ5MC3D4ck8QhkYf1R1Z7qL?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
+                        >
+                          TonHub
+                        </Button>
+                        <Button
+                          variant="contained"
+                          target="_blank"
+                          href={`ton://transfer/kQC7sRCtX3t4-ubU6mn2xAX0TVQ5MC3D4ck8QhkYf1R1Z7qL?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
+                        >
+                          {t('other')}
+                        </Button>
+                        <Button onClick={handleClose} variant="contained">{t('close_dialog')}</Button>
+                      </ButtonGroup>
+                    </DialogActions>
+                  </Dialog>
                   <Tooltip title={t('clear_choice')}>
                     <span>
                       <IconButton
