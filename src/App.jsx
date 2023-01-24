@@ -9,7 +9,7 @@ import { Helmet } from 'react-helmet';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import LanguageIcon from '@mui/icons-material/Language';
 import {
-  AppBar,
+  AppBar, Backdrop,
   Box,
   Button, ButtonGroup,
   Card,
@@ -21,7 +21,7 @@ import {
   IconButton,
   MenuItem,
   Paper,
-  Select, Slide,
+  Select, Skeleton, Slide,
   Table,
   TableBody,
   TableCell,
@@ -41,6 +41,8 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import QrCodeWithLogo from 'qrcode-with-logos';
+// eslint-disable-next-line import/no-extraneous-dependencies
+// import Carousel from 'react-material-ui-carousel';
 import withRoot, { ColorModeContext } from './withRoot';
 import factorialize from './utils';
 
@@ -146,6 +148,7 @@ function App() {
   const [numbers, setNumbers] = useState([]);
   const [price, setPrice] = useState(0.2);
   const [openBuyDialog, setOpenBuyDialog] = React.useState(false);
+  // const [firstImgLoaded, setFirstImgLoaded] = useState(false);
 
   function pad(num, size) {
     // eslint-disable-next-line no-param-reassign
@@ -336,251 +339,330 @@ function App() {
 
   // noinspection JSCheckFunctionSignatures,RequiredAttributes
   return (
-    ready && (
-    <>
-      <Helmet>
-        <title>{t('title_v2')}</title>
-      </Helmet>
-      <div style={theme.palette.mode === 'dark' ? stylesDark.background : stylesLight.background}>
-        <Box
-          sx={{ flexGrow: 1 }}
-        >
-          <AppBar position="static">
-            <Toolbar>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} />
-              <Select
-                size="small"
-                value={locale}
-                label="Language"
-                onChange={(e) => {
-                  changeLanguage(e.target.value);
-                }}
-              >
-                {languages.map((lang) => (<MenuItem key={lang.code} value={lang.code}>{lang.name}</MenuItem>))}
-
-              </Select>
-              <Tooltip title={t('translate_help')}>
-                <IconButton sx={{ ml: 2 }} href="https://crowdin.com/project/ton-lottery" target="_blank">
-                  <LanguageIcon />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title={t('telegram_support')}>
-                <IconButton sx={{ ml: 2 }} href="https://t.me/tonlottery_support_bot" target="_blank">
-                  <TelegramIcon />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title={theme.palette.mode === 'dark' ? t('light_mode') : t('dark_mode')}>
-                <IconButton sx={{ ml: 2 }} onClick={colorMode.toggleColorMode} color="inherit">
-                  {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-                </IconButton>
-              </Tooltip>
-            </Toolbar>
-          </AppBar>
-        </Box>
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <Box sx={{ mt: 2 }}>
-            <Card>
-              <CardContent>
-                {getOutAmount && (
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                  {`${t('out_amount')} ${Number((parseInt(getOutAmount, 16) / 1000000000))}💎`}
-                </Typography>
-                )}
-                {getGamePlayed && (
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                  {`${t('total_games')} ${Number((parseInt(getGamePlayed, 16)))}`}
-                </Typography>
-                )}
-                {!isNaN(jackpot) && (
-                <Typography variant="h5" component="div">
-                  {`${t('jackpot')} ${jackpot}💎`}
-                </Typography>
-                )}
-                {(numbers.length < 6) ? (
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    {`${t('need_choose_numbers')} ${Math.max(6 - numbers.length, 0)}`}
+    ready ? (
+      <>
+        <Helmet>
+          <title>{t('title_v2')}</title>
+        </Helmet>
+        <div style={theme.palette.mode === 'dark' ? stylesDark.background : stylesLight.background}>
+          <Box
+            sx={{ flexGrow: 1 }}
+          >
+            <AppBar position="static">
+              <Toolbar>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} />
+                <Select
+                  size="small"
+                  value={locale}
+                  label="Language"
+                  onChange={(e) => {
+                    changeLanguage(e.target.value);
+                  }}
+                >
+                  {languages.map((lang) => (<MenuItem key={lang.code} value={lang.code}>{lang.name}</MenuItem>))}
+                </Select>
+                <Tooltip title={t('translate_help')}>
+                  <IconButton sx={{ ml: 2 }} href="https://crowdin.com/project/ton-lottery" target="_blank">
+                    <LanguageIcon />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title={t('telegram_support')}>
+                  <IconButton sx={{ ml: 2 }} href="https://t.me/tonlottery_support_bot" target="_blank">
+                    <TelegramIcon />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title={theme.palette.mode === 'dark' ? t('light_mode') : t('dark_mode')}>
+                  <IconButton sx={{ ml: 2 }} onClick={colorMode.toggleColorMode} color="inherit">
+                    {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                  </IconButton>
+                </Tooltip>
+              </Toolbar>
+            </AppBar>
+          </Box>
+          <Container component="main" maxWidth="sm">
+            <CssBaseline />
+            <Box sx={{ mt: 2 }}>
+              <Card>
+                <CardContent>
+                  {getOutAmount ? (
+                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                      {`${t('out_amount')} ${Number((parseInt(getOutAmount, 16) / 1000000000))}💎`}
+                    </Typography>
+                  ) : <Skeleton variant="text" />}
+                  {getGamePlayed ? (
+                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                      {`${t('total_games')} ${Number((parseInt(getGamePlayed, 16)))}`}
+                    </Typography>
+                  ) : <Skeleton variant="text" />}
+                  {!isNaN(jackpot) ? (
+                    <Typography variant="h5" component="div">
+                      {`${t('jackpot')} ${jackpot}💎`}
+                    </Typography>
+                  ) : <Skeleton variant="text" />}
+                  {(numbers.length < 6) ? (
+                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                      {`${t('need_choose_numbers')} ${Math.max(6 - numbers.length, 0)}`}
+                    </Typography>
+                  ) : (
+                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                      {t('choose_more_numbers_v2')}
+                    </Typography>
+                  )}
+                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    {`${t('win_chance')} x${Math.round(price / 0.2)}`}
                   </Typography>
-                ) : (
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    {t('choose_more_numbers_v2')}
-                  </Typography>
-                )}
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                  {`${t('win_chance')} x${Math.round(price / 0.2)}`}
-                </Typography>
-                {
-                      [...Array(9)].map((e, k) => (
+                  {
+                      [...Array(5)].map((e, k) => (
                         <Grid
                           container
                           wrap="nowrap"
                           key={k}
                         >
                           {
-                              [...Array(5)].map((el, i) => (
+                              [...Array(9)].map((el, i) => (
                                 <ToggleButton
-                                  value={(i + 1) + (5 * k)}
-                                  key={(i + 1) + (5 * k)}
-                                  disabled={numbers.length > 15 && !numbers.includes((i + 1) + (5 * k))}
+                                  value={(i + 1) + (9 * k)}
+                                  key={(i + 1) + (9 * k)}
+                                  disabled={numbers.length > 15 && !numbers.includes((i + 1) + (9 * k))}
                                   size="small"
                                   fullWidth
                                   sx={{ aspectRatio: '1 / 0.9' }}
                                   onChange={(elem, v) => {
-                                    if (numbers.includes((i + 1) + (5 * k))) handleFormat(v * (-1));
+                                    if (numbers.includes((i + 1) + (9 * k))) handleFormat(v * (-1));
                                     else handleFormat(v);
                                   }}
-                                  selected={numbers.includes((i + 1) + (5 * k))}
+                                  selected={numbers.includes((i + 1) + (9 * k))}
                                 >
-                                  <Typography>{(i + 1) + (5 * k)}</Typography>
+                                  <Typography>{(i + 1) + (9 * k)}</Typography>
                                 </ToggleButton>
                               ))
                             }
                         </Grid>
                       ))
                     }
-              </CardContent>
-              <CardActions>
-                <Box display="flex">
-                  <Button
-                    size="small"
-                    disabled={numbers.length < 6 || numbers.length > 16}
-                    variant="contained"
-                    onClick={handleClickOpen}
-                  >
-                    {t('buy_button')}
-                    {' '}
-                    {price}
-                    💎
-                  </Button>
-                  <Dialog
-                    open={openBuyDialog}
-                    TransitionComponent={Transition}
-                    keepMounted
-                    onClose={handleClose}
-                  >
-                    <DialogTitle>
+                </CardContent>
+                <CardActions>
+                  <Box display="flex">
+                    <Button
+                      size="small"
+                      disabled={numbers.length < 6 || numbers.length > 16}
+                      variant="contained"
+                      onClick={handleClickOpen}
+                    >
                       {t('buy_button')}
                       {' '}
                       {price}
                       💎
-                    </DialogTitle>
-                    <DialogContent>
-                      <DialogContentText>
-                        {t('your_numbers')}
+                    </Button>
+                    <Dialog
+                      open={openBuyDialog}
+                      TransitionComponent={Transition}
+                      keepMounted
+                      onClose={handleClose}
+                    >
+                      <DialogTitle>
+                        {t('buy_button')}
                         {' '}
-                        {numbers.map((num) => pad(num, 2)).join(', ')}
-                      </DialogContentText>
-                      <canvas id="qrcode" style={{ padding: 0, margin: 'auto', display: 'block' }} />
-                    </DialogContent>
-                    <DialogActions>
-                      <ButtonGroup size="small">
-                        <Button
-                          variant="contained"
-                          target="_blank"
-                          href={`https://app.tonkeeper.com/transfer/kQC7sRCtX3t4-ubU6mn2xAX0TVQ5MC3D4ck8QhkYf1R1Z7qL?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
+                        {price}
+                        💎
+                      </DialogTitle>
+                      <DialogContent>
+                        <DialogContentText>
+                          {t('your_numbers')}
+                          {' '}
+                          {numbers.map((num) => pad(num, 2)).join(', ')}
+                        </DialogContentText>
+                        <canvas id="qrcode" style={{ padding: 0, margin: 'auto', display: 'block' }} />
+                      </DialogContent>
+                      <DialogActions>
+                        <ButtonGroup size="small">
+                          <Button
+                            variant="contained"
+                            target="_blank"
+                            href={`https://app.tonkeeper.com/transfer/kQC7sRCtX3t4-ubU6mn2xAX0TVQ5MC3D4ck8QhkYf1R1Z7qL?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
+                          >
+                            TonKeeper
+                          </Button>
+                          <Button
+                            variant="contained"
+                            target="_blank"
+                            href={`https://test.tonhub.com/transfer/kQC7sRCtX3t4-ubU6mn2xAX0TVQ5MC3D4ck8QhkYf1R1Z7qL?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
+                          >
+                            TonHub
+                          </Button>
+                          <Button
+                            variant="contained"
+                            target="_blank"
+                            href={`ton://transfer/kQC7sRCtX3t4-ubU6mn2xAX0TVQ5MC3D4ck8QhkYf1R1Z7qL?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
+                          >
+                            {t('other')}
+                          </Button>
+                          <Button onClick={handleClose} variant="contained">{t('close_dialog')}</Button>
+                        </ButtonGroup>
+                      </DialogActions>
+                    </Dialog>
+                    <Tooltip title={t('clear_choice')}>
+                      <span>
+                        <IconButton
+                          sx={{ ml: 16 }}
+                          disabled={numbers.length === 0}
+                          onClick={() => setNumbers([])}
                         >
-                          TonKeeper
-                        </Button>
-                        <Button
-                          variant="contained"
-                          target="_blank"
-                          href={`https://test.tonhub.com/transfer/kQC7sRCtX3t4-ubU6mn2xAX0TVQ5MC3D4ck8QhkYf1R1Z7qL?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
-                        >
-                          TonHub
-                        </Button>
-                        <Button
-                          variant="contained"
-                          target="_blank"
-                          href={`ton://transfer/kQC7sRCtX3t4-ubU6mn2xAX0TVQ5MC3D4ck8QhkYf1R1Z7qL?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
-                        >
-                          {t('other')}
-                        </Button>
-                        <Button onClick={handleClose} variant="contained">{t('close_dialog')}</Button>
-                      </ButtonGroup>
-                    </DialogActions>
-                  </Dialog>
-                  <Tooltip title={t('clear_choice')}>
-                    <span>
-                      <IconButton
-                        sx={{ ml: 16 }}
-                        disabled={numbers.length === 0}
-                        onClick={() => setNumbers([])}
-                      >
-                        <ClearIcon />
-                      </IconButton>
-                    </span>
-                  </Tooltip>
-                  <Tooltip title={t('random_choice')}>
-                    <span>
-                      <IconButton onClick={() => setNumbers(getRandom())}>
-                        <CasinoIcon />
-                      </IconButton>
-                    </span>
-                  </Tooltip>
-                </Box>
-              </CardActions>
-              {numbers.length > 5 && (
-              <CardContent>
-                <TableContainer component={Paper}>
-                  <Table size="small" aria-label="a dense table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>{t('true_numbers')}</TableCell>
-                        <TableCell align="right">{t('prize_amount')}</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell component="th" scope="row">6</TableCell>
-                        <TableCell align="right">
-                          {
+                          <ClearIcon />
+                        </IconButton>
+                      </span>
+                    </Tooltip>
+                    <Tooltip title={t('random_choice')}>
+                      <span>
+                        <IconButton onClick={() => setNumbers(getRandom())}>
+                          <CasinoIcon />
+                        </IconButton>
+                      </span>
+                    </Tooltip>
+                  </Box>
+                </CardActions>
+                {numbers.length > 5 && (
+                <CardContent>
+                  <TableContainer component={Paper}>
+                    <Table size="small" aria-label="a dense table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>{t('true_numbers')}</TableCell>
+                          <TableCell align="right">{t('prize_amount')}</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell component="th" scope="row">6</TableCell>
+                          <TableCell align="right">
+                            {
                                     `${+getPrizeByCount(4, numbers.length - 6)}💎`
                                   }
-                        </TableCell>
-                      </TableRow>
-                      <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                        <TableCell component="th" scope="row">5</TableCell>
-                        <TableCell align="right">
-                          {
+                          </TableCell>
+                        </TableRow>
+                        <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                          <TableCell component="th" scope="row">5</TableCell>
+                          <TableCell align="right">
+                            {
                                     `${+getPrizeByCount(3, numbers.length - 6)}💎`
                                   }
-                        </TableCell>
-                      </TableRow>
-                      <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                        <TableCell component="th" scope="row">4</TableCell>
-                        <TableCell align="right">
-                          {
+                          </TableCell>
+                        </TableRow>
+                        <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                          <TableCell component="th" scope="row">4</TableCell>
+                          <TableCell align="right">
+                            {
                                     `${+getPrizeByCount(2, numbers.length - 6)}💎`
                                   }
-                        </TableCell>
-                      </TableRow>
-                      <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                        <TableCell component="th" scope="row">3</TableCell>
-                        <TableCell align="right">
-                          {
+                          </TableCell>
+                        </TableRow>
+                        <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                          <TableCell component="th" scope="row">3</TableCell>
+                          <TableCell align="right">
+                            {
                                     `${+getPrizeByCount(1, numbers.length - 6)}💎`
                                   }
-                        </TableCell>
-                      </TableRow>
-                      <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                        <TableCell component="th" scope="row">2</TableCell>
-                        <TableCell align="right">
-                          {
+                          </TableCell>
+                        </TableRow>
+                        <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                          <TableCell component="th" scope="row">2</TableCell>
+                          <TableCell align="right">
+                            {
                                     `${+getPrizeByCount(0, numbers.length - 6)}💎`
                                   }
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </CardContent>
-              )}
-            </Card>
-          </Box>
-        </Container>
-      </div>
-    </>
-    )
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </CardContent>
+                )}
+              </Card>
+              {/* <Card sx={{ mt: 2 }}> */}
+              {/*  <CardContent> */}
+              {/*    <Typography variant="h5" component="div"> */}
+              {/*      {t('how_to')} */}
+              {/*    </Typography> */}
+              {/*    <img */}
+              {/*      src="/img/step1.png" */}
+              {/*      onLoad={() => setFirstImgLoaded(true)} */}
+              {/*      style={{ display: 'none' }} */}
+              {/*      alt="" */}
+              {/*    /> */}
+              {/*    {firstImgLoaded && ( */}
+              {/*    <Carousel autoPlay={false} swipe={false} navButtonsAlwaysVisible> */}
+              {/*      <Paper> */}
+              {/*        <Typography variant="h7" component="div"> */}
+              {/*          {t('choose_six_numbers')} */}
+              {/*        </Typography> */}
+              {/*        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom> */}
+              {/*          {t('try_choose_more')} */}
+              {/*        </Typography> */}
+              {/*        <img src="/img/step1.png" alt="" /> */}
+              {/*      </Paper> */}
+              {/*    </Carousel> */}
+              {/*    )} */}
+              {/*  </CardContent> */}
+              {/* </Card> */}
+              <Card sx={{ mt: 2 }}>
+                <CardContent>
+                  <Typography variant="h5" component="div">
+                    {t('about')}
+                  </Typography>
+                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    {t('about_main')}
+                  </Typography>
+                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    {t('about_main_concepts')}
+                  </Typography>
+                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    <li>
+                      {t('open_source')}
+                    </li>
+                    <li>
+                      {t('sc_wallet')}
+                    </li>
+                    <li>
+                      {t('sc_dapp')}
+                    </li>
+                  </Typography>
+
+                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+
+                    {t('why_us')}
+
+                    <li>
+                      {t('from_anywhere')}
+                    </li>
+                    <li>
+                      {t('full_open_source')}
+                    </li>
+                    <li>
+                      {t('instant_pays')}
+                    </li>
+                    <li>
+                      {t('min_prize')}
+                    </li>
+                    <li>
+                      {t('low_fees')}
+                    </li>
+                    <li>
+                      {t('anon')}
+                    </li>
+                    <li>
+                      {t('rules_forever')}
+                    </li>
+                    <li>
+                      {t('guarantee')}
+                    </li>
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Box>
+          </Container>
+        </div>
+      </>
+    ) : <Backdrop open />
   );
 }
 
