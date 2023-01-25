@@ -163,7 +163,7 @@ function App() {
     new QrCodeWithLogo({
       canvas: document.getElementById('qrcode'),
       /* eslint-disable-next-line max-len */
-      content: `ton://transfer/kQC7sRCtX3t4-ubU6mn2xAX0TVQ5MC3D4ck8QhkYf1R1Z7qL?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`,
+      content: `ton://transfer/EQBifMx9e29-2Sh9_3yR69nbo79e0ETvqtBN1Md6pJ0j7J3t?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`,
       download: true,
       width: '100%',
       image: document.getElementById('image'),
@@ -479,21 +479,21 @@ function App() {
                           <Button
                             variant="contained"
                             target="_blank"
-                            href={`https://app.tonkeeper.com/transfer/kQC7sRCtX3t4-ubU6mn2xAX0TVQ5MC3D4ck8QhkYf1R1Z7qL?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
+                            href={`https://app.tonkeeper.com/transfer/EQBifMx9e29-2Sh9_3yR69nbo79e0ETvqtBN1Md6pJ0j7J3t?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
                           >
                             TonKeeper
                           </Button>
                           <Button
                             variant="contained"
                             target="_blank"
-                            href={`https://test.tonhub.com/transfer/kQC7sRCtX3t4-ubU6mn2xAX0TVQ5MC3D4ck8QhkYf1R1Z7qL?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
+                            href={`https://test.tonhub.com/transfer/EQBifMx9e29-2Sh9_3yR69nbo79e0ETvqtBN1Md6pJ0j7J3t?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
                           >
                             TonHub
                           </Button>
                           <Button
                             variant="contained"
                             target="_blank"
-                            href={`ton://transfer/kQC7sRCtX3t4-ubU6mn2xAX0TVQ5MC3D4ck8QhkYf1R1Z7qL?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
+                            href={`ton://transfer/EQBifMx9e29-2Sh9_3yR69nbo79e0ETvqtBN1Md6pJ0j7J3t?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
                           >
                             {t('other')}
                           </Button>
