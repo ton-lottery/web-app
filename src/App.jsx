@@ -486,7 +486,7 @@ function App() {
                           <Button
                             variant="contained"
                             target="_blank"
-                            href={`https://test.tonhub.com/transfer/EQBifMx9e29-2Sh9_3yR69nbo79e0ETvqtBN1Md6pJ0j7J3t?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
+                            href={`https://tonhub.com/transfer/EQBifMx9e29-2Sh9_3yR69nbo79e0ETvqtBN1Md6pJ0j7J3t?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
                           >
                             TonHub
                           </Button>
