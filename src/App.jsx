@@ -258,13 +258,13 @@ function App() {
     }
   }, [getBet, numbers, setPrice]);
 
-  const fetchFunc = (methodName) => fetch('https://testnet.toncenter.com/api/v2/runGetMethod', {
+  const fetchFunc = (methodName) => fetch('https://toncenter.com/api/v2/runGetMethod', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      address: 'kQC7sRCtX3t4-ubU6mn2xAX0TVQ5MC3D4ck8QhkYf1R1Z7qL',
+      address: 'EQBifMx9e29-2Sh9_3yR69nbo79e0ETvqtBN1Md6pJ0j7J3t',
       method: methodName,
       stack: [['num', 1]],
     }),
