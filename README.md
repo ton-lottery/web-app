@@ -1,4 +1,4 @@
-[![Crowdin](https://badges.crowdin.net/ton-lottery/localized.svg)](https://crowdin.com/project/ton-lottery)
+[![Crowdin](https://badges.crowdin.net/tonlottery/localized.svg)](https://crowdin.com/project/tonlottery)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/ton-lottery/web-app/docker-image.yml)
 ![GitHub top language](https://img.shields.io/github/languages/top/ton-lottery/web-app)
 ![Lines of code](https://img.shields.io/tokei/lines/github/ton-lottery/web-app)
