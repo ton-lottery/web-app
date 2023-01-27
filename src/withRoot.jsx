@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useMemo, useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { YMInitializer } from 'react-yandex-metrika';
 import i18n from './i18n';
 
 export const ColorModeContext = React.createContext({
@@ -34,11 +36,14 @@ function withRoot(Component) {
     );
 
     return (
-      <ColorModeContext.Provider value={colorMode}>
-        <ThemeProvider theme={theme}>
-          <Component {...props} />
-        </ThemeProvider>
-      </ColorModeContext.Provider>
+      <>
+        <YMInitializer accounts={[92217250]} />
+        <ColorModeContext.Provider value={colorMode}>
+          <ThemeProvider theme={theme}>
+            <Component {...props} />
+          </ThemeProvider>
+        </ColorModeContext.Provider>
+      </>
     );
   }
 
