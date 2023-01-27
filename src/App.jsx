@@ -362,7 +362,7 @@ function App() {
                   {languages.map((lang) => (<MenuItem key={lang.code} value={lang.code}>{lang.name}</MenuItem>))}
                 </Select>
                 <Tooltip title={t('translate_help')}>
-                  <IconButton sx={{ ml: 2 }} href="https://crowdin.com/project/ton-lottery" target="_blank">
+                  <IconButton sx={{ ml: 2 }} href="https://crowdin.com/project/tonlottery" target="_blank">
                     <LanguageIcon />
                   </IconButton>
                 </Tooltip>
