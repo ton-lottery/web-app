@@ -14,12 +14,10 @@ import {
   Button, ButtonGroup,
   Card,
   CardActions,
-  CardContent,
-  Container,
+  CardContent, Container,
   CssBaseline, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
   Grid,
-  IconButton,
-  MenuItem,
+  IconButton, MenuItem,
   Paper,
   Select, Skeleton, Slide,
   Table,
@@ -45,6 +43,7 @@ import QrCodeWithLogo from 'qrcode-with-logos';
 // import Carousel from 'react-material-ui-carousel';
 import withRoot, { ColorModeContext } from './withRoot';
 import factorialize from './utils';
+import Faq from './Faq';
 
 const winKf = [
   [
@@ -584,32 +583,6 @@ function App() {
                 </CardContent>
                 )}
               </Card>
-              {/* <Card sx={{ mt: 2 }}> */}
-              {/*  <CardContent> */}
-              {/*    <Typography variant="h5" component="div"> */}
-              {/*      {t('how_to')} */}
-              {/*    </Typography> */}
-              {/*    <img */}
-              {/*      src="/img/step1.png" */}
-              {/*      onLoad={() => setFirstImgLoaded(true)} */}
-              {/*      style={{ display: 'none' }} */}
-              {/*      alt="" */}
-              {/*    /> */}
-              {/*    {firstImgLoaded && ( */}
-              {/*    <Carousel autoPlay={false} swipe={false} navButtonsAlwaysVisible> */}
-              {/*      <Paper> */}
-              {/*        <Typography variant="h7" component="div"> */}
-              {/*          {t('choose_six_numbers')} */}
-              {/*        </Typography> */}
-              {/*        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom> */}
-              {/*          {t('try_choose_more')} */}
-              {/*        </Typography> */}
-              {/*        <img src="/img/step1.png" alt="" /> */}
-              {/*      </Paper> */}
-              {/*    </Carousel> */}
-              {/*    )} */}
-              {/*  </CardContent> */}
-              {/* </Card> */}
               <Card sx={{ mt: 2 }}>
                 <CardContent>
                   <Typography variant="h5" component="div">
@@ -664,6 +637,29 @@ function App() {
                   </Typography>
                 </CardContent>
               </Card>
+              <Card sx={{ mt: 2 }}>
+                <CardContent>
+                  <Typography variant="h5" component="div">
+                    {t('how_to')}
+                  </Typography>
+                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    1)
+                    {' '}
+                    {t('how_to_need_choose')}
+                  </Typography>
+                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    2)
+                    {' '}
+                    {t('how_to_pay')}
+                  </Typography>
+                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    3)
+                    {' '}
+                    {t('how_to_wait')}
+                  </Typography>
+                </CardContent>
+              </Card>
+              <Faq />
             </Box>
           </Container>
         </div>
