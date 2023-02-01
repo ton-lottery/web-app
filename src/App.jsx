@@ -258,7 +258,7 @@ function App() {
     }
   }, [getBet, numbers, setPrice]);
 
-  const fetchFunc = (methodName) => fetch('https://toncenter.com/api/v2/runGetMethod', {
+  const fetchFunc = (methodName) => fetch('https://toncenter.com/api/v2/runGetMethod?api_key=585f63b836913f24257451f3f22d0711c515d920d50a993c3640ca7726e9a6c2', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
