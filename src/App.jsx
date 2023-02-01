@@ -240,7 +240,7 @@ function App() {
       const need = prize - currentJackpot;
       if (parseInt(getGuaranteedPrize, 16) < need) prize = prize - need + parseInt(getGuaranteedPrize, 16);
     }
-    return (prize / 1000000000).toFixed(2);
+    return (prize / 1000000000).toFixed(3);
   }, [balance, getBet, getGuaranteedPrize, getOwnerFee]);
 
   const handleFormat = (event) => {
@@ -252,7 +252,7 @@ function App() {
   useEffect(() => {
     if (numbers.length > 5 && numbers.length < 17) {
       setPrice(Number(((parseInt(getBet, 16) / 1000000000)
-          * (factorialize(numbers.length) / factorialize(6) / factorialize(numbers.length - 6))).toFixed(9)));
+          * (factorialize(numbers.length) / factorialize(6) / factorialize(numbers.length - 6))).toFixed(3)));
     } else {
       setPrice(parseInt(getBet, 16) / 100000000);
     }
