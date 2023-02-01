@@ -409,7 +409,7 @@ function App() {
                     </Typography>
                   )}
                   <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    {`${t('win_chance')} x${Math.round(price / 0.2)}`}
+                    {`${t('win_chance')} x${Math.round(price / Number((parseInt(getBet, 16) / 1000000000)))}`}
                   </Typography>
                   {
                       [...Array(5)].map((e, k) => (
