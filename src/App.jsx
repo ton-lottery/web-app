@@ -408,9 +408,12 @@ function App() {
                       {t('choose_more_numbers_v2')}
                     </Typography>
                   )}
-                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    {`${t('win_chance')} x${Math.round(price / Number((parseInt(getBet, 16) / 1000000000)))}`}
-                  </Typography>
+                  {!isNaN(Math.round(price / Number((parseInt(getBet, 16) / 1000000000))))
+                      && (
+                      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                        {`${t('win_chance')} x${Math.round(price / Number((parseInt(getBet, 16) / 1000000000)))}`}
+                      </Typography>
+                      )}
                   {
                       [...Array(5)].map((e, k) => (
                         <Grid
@@ -443,6 +446,7 @@ function App() {
                 </CardContent>
                 <CardActions>
                   <Box display="flex">
+                    {!isNaN(price) && (
                     <Button
                       size="small"
                       disabled={numbers.length < 6 || numbers.length > 16}
@@ -454,10 +458,12 @@ function App() {
                       {price}
                       💎
                     </Button>
+                    )}
                     <Dialog
                       open={openBuyDialog}
                       TransitionComponent={Transition}
                       keepMounted
+                      sx={{ whiteSpace: 'nowrap', textAlign: 'center' }}
                       onClose={handleClose}
                     >
                       <DialogTitle>
