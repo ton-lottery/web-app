@@ -254,7 +254,7 @@ function App() {
       setPrice(Number(((parseInt(getBet, 16) / 1000000000)
           * (factorialize(numbers.length) / factorialize(6) / factorialize(numbers.length - 6))).toFixed(3)));
     } else {
-      setPrice(parseInt(getBet, 16) / 100000000);
+      setPrice(parseInt(getBet, 16) / 1000000000);
     }
   }, [getBet, numbers, setPrice]);
 
