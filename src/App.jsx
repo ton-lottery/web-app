@@ -254,7 +254,7 @@ function App() {
       setPrice(Number(((parseInt(getBet, 16) / 1000000000)
           * (factorialize(numbers.length) / factorialize(6) / factorialize(numbers.length - 6))).toFixed(9)));
     } else {
-      setPrice(0.2);
+      setPrice(parseInt(getBet, 16) / 100000000);
     }
   }, [getBet, numbers, setPrice]);
 
@@ -289,31 +289,31 @@ function App() {
         setBalance(res);
         localStorage.setItem('balance', res);
       }).then(() => {
-        sleep(1500).then(() => {
+        sleep(150).then(() => {
           fetchFunc(methods[1]).then((json) => {
             const res = json.result.stack[1][1];
             setGetGuaranteedPrize(res);
             localStorage.setItem('getGuaranteedPrize', res);
           }).then(() => {
-            sleep(1500).then(() => {
+            sleep(150).then(() => {
               fetchFunc(methods[2]).then((json) => {
                 const res = json.result.stack[1][1];
                 setGetOwnerFee(res);
                 localStorage.setItem('getOwnerFee', res);
               }).then(() => {
-                sleep(1500).then(() => {
+                sleep(150).then(() => {
                   fetchFunc(methods[3]).then((json) => {
                     const res = json.result.stack[1][1];
                     setGetBet(res);
                     localStorage.setItem('getBet', res);
                   }).then(() => {
-                    sleep(1500).then(() => {
+                    sleep(150).then(() => {
                       fetchFunc(methods[4]).then((json) => {
                         const res = json.result.stack[1][1];
                         setGetOutAmount(res);
                         localStorage.setItem('getOutAmount', res);
                       }).then(() => {
-                        sleep(1500).then(() => {
+                        sleep(150).then(() => {
                           fetchFunc(methods[5]).then((json) => {
                             const res = json.result.stack[1][1];
                             setGetGamePlayed(res);
@@ -333,7 +333,7 @@ function App() {
     if (!isRun) {
       setIsRun(true);
       fillData();
-      setInterval(fillData, 18000);
+      setInterval(fillData, 3000);
     }
   }, [balance, getBet, getGamePlayed, getGuaranteedPrize, getOutAmount, getOwnerFee, isRun]);
 
