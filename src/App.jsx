@@ -8,6 +8,8 @@ import React, {
 import { Helmet } from 'react-helmet';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import LanguageIcon from '@mui/icons-material/Language';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import ym from 'react-yandex-metrika';
 import {
   AppBar, Backdrop,
   Box,
@@ -158,6 +160,7 @@ function App() {
   }
 
   const handleClickOpen = () => {
+    ym('reachGoal', 'buy_button');
     // noinspection JSCheckFunctionSignatures
     new QrCodeWithLogo({
       canvas: document.getElementById('qrcode'),
@@ -430,6 +433,7 @@ function App() {
                                   fullWidth
                                   sx={{ aspectRatio: '1 / 0.9' }}
                                   onChange={(elem, v) => {
+                                    ym('reachGoal', 'toggle');
                                     if (numbers.includes((i + 1) + (9 * k))) handleFormat(v * (-1));
                                     else handleFormat(v);
                                   }}
@@ -484,6 +488,7 @@ function App() {
                           <Button
                             variant="contained"
                             target="_blank"
+                            onClick={() => ym('reachGoal', 'wallet_button')}
                             href={`https://app.tonkeeper.com/transfer/EQBifMx9e29-2Sh9_3yR69nbo79e0ETvqtBN1Md6pJ0j7J3t?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
                           >
                             TonKeeper
@@ -491,6 +496,7 @@ function App() {
                           <Button
                             variant="contained"
                             target="_blank"
+                            onClick={() => ym('reachGoal', 'wallet_button')}
                             href={`https://tonhub.com/transfer/EQBifMx9e29-2Sh9_3yR69nbo79e0ETvqtBN1Md6pJ0j7J3t?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
                           >
                             TonHub
@@ -498,6 +504,7 @@ function App() {
                           <Button
                             variant="contained"
                             target="_blank"
+                            onClick={() => ym('reachGoal', 'wallet_button')}
                             href={`ton://transfer/EQBifMx9e29-2Sh9_3yR69nbo79e0ETvqtBN1Md6pJ0j7J3t?amount=${price * 1000000000}&text=${numbers.map((num) => pad(num, 2)).join('%20')}`}
                           >
                             {t('other')}
@@ -519,7 +526,11 @@ function App() {
                     </Tooltip>
                     <Tooltip title={t('random_choice')}>
                       <span>
-                        <IconButton onClick={() => setNumbers(getRandom())}>
+                        <IconButton onClick={() => {
+                          ym('reachGoal', 'toggle');
+                          setNumbers(getRandom());
+                        }}
+                        >
                           <CasinoIcon />
                         </IconButton>
                       </span>
