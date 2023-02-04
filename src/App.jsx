@@ -50,6 +50,8 @@ import withRoot from './withRoot';
 import factorialize from './utils';
 import Faq from './Faq';
 import AppBar from './AppBar';
+import About from './About';
+import HowPlay from './HowPlay';
 
 const winKf = [
   [
@@ -550,82 +552,8 @@ function App() {
                 </CardContent>
                 )}
               </Card>
-              <Card sx={{ mt: 2 }}>
-                <CardContent>
-                  <Typography variant="h5" component="div">
-                    {t('about')}
-                  </Typography>
-                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    {t('about_main')}
-                  </Typography>
-                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    {t('about_main_concepts')}
-                  </Typography>
-                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    <li>
-                      {t('open_source')}
-                    </li>
-                    <li>
-                      {t('sc_wallet')}
-                    </li>
-                    <li>
-                      {t('sc_dapp')}
-                    </li>
-                  </Typography>
-
-                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-
-                    {t('why_us')}
-
-                    <li>
-                      {t('from_anywhere')}
-                    </li>
-                    <li>
-                      {t('full_open_source')}
-                    </li>
-                    <li>
-                      {t('instant_pays')}
-                    </li>
-                    <li>
-                      {t('min_prize')}
-                    </li>
-                    <li>
-                      {t('low_fees')}
-                    </li>
-                    <li>
-                      {t('anon')}
-                    </li>
-                    <li>
-                      {t('rules_forever')}
-                    </li>
-                    <li>
-                      {t('guarantee')}
-                    </li>
-                  </Typography>
-                </CardContent>
-              </Card>
-              <Card sx={{ mt: 2 }}>
-                <CardContent>
-                  <Typography variant="h5" component="div">
-                    {t('how_to')}
-                  </Typography>
-                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    1)
-                    {' '}
-                    {t('how_to_need_choose')}
-                  </Typography>
-                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    2)
-                    {' '}
-                    {t('how_to_pay')}
-                  </Typography>
-                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    3)
-                    {' '}
-                    {t('how_to_wait')}
-                  </Typography>
-                </CardContent>
-              </Card>
+              <About />
+              <HowPlay />
               <Faq />
             </Box>
           </Container>
