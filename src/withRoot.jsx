@@ -37,7 +37,16 @@ function withRoot(Component) {
 
     return (
       <>
-        <YMInitializer accounts={[92217250]} />
+        <YMInitializer
+          accounts={[92217250]}
+          options={{
+            clickmap: true,
+            trackLinks: true,
+            accurateTrackBounce: true,
+            webvisor: true,
+            trackHash: true,
+          }}
+        />
         <ColorModeContext.Provider value={colorMode}>
           <ThemeProvider theme={theme}>
             <Component {...props} />
