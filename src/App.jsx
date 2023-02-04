@@ -6,22 +6,28 @@ import React, {
 } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Helmet } from 'react-helmet';
-import TelegramIcon from '@mui/icons-material/Telegram';
-import LanguageIcon from '@mui/icons-material/Language';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import ym from 'react-yandex-metrika';
 import {
-  AppBar, Backdrop,
+  Backdrop,
   Box,
-  Button, ButtonGroup,
+  Button,
+  ButtonGroup,
   Card,
   CardActions,
-  CardContent, Container,
-  CssBaseline, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
+  CardContent,
+  Container,
+  CssBaseline,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Grid,
-  IconButton, MenuItem,
+  IconButton,
   Paper,
-  Select, Skeleton, Slide,
+  Skeleton,
+  Slide,
   Table,
   TableBody,
   TableCell,
@@ -29,7 +35,6 @@ import {
   TableHead,
   TableRow,
   ToggleButton,
-  Toolbar,
   Tooltip,
   Typography,
   useTheme,
@@ -37,15 +42,14 @@ import {
 import ClearIcon from '@mui/icons-material/Clear';
 import CasinoIcon from '@mui/icons-material/Casino';
 import { useTranslation } from 'react-i18next';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import QrCodeWithLogo from 'qrcode-with-logos';
 // eslint-disable-next-line import/no-extraneous-dependencies
 // import Carousel from 'react-material-ui-carousel';
-import withRoot, { ColorModeContext } from './withRoot';
+import withRoot from './withRoot';
 import factorialize from './utils';
 import Faq from './Faq';
+import AppBar from './AppBar';
 
 const winKf = [
   [
@@ -126,18 +130,12 @@ const winKf = [
     155400,
   ],
 ];
-const languages = [{ code: 'en', name: 'English' }, { code: 'ru', name: 'Русский' }];
 // eslint-disable-next-line react/jsx-props-no-spreading,react/display-name
 const Transition = forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
 function App() {
-  const { t, i18n, ready } = useTranslation();
+  const { t, ready } = useTranslation();
   const theme = useTheme();
-  const colorMode = React.useContext(ColorModeContext);
-  document.body.dir = i18n.dir();
-  const [locale, setLocale] = React.useState(
-    localStorage.getItem('lng') || languages.find((value) => value.code === 'en').code,
-  );
   const [isRun, setIsRun] = useState(false);
   const [balance, setBalance] = useState(localStorage.getItem('balance'));
   const [getGuaranteedPrize, setGetGuaranteedPrize] = useState(localStorage.getItem('getGuaranteedPrize'));
@@ -203,19 +201,6 @@ function App() {
       backgroundImage,
     },
   };
-
-  const changeLanguage = (lng) => {
-    setLocale(lng);
-    localStorage.setItem('lng', lng);
-    i18n.changeLanguage(lng).then((r) => r);
-    document.body.dir = i18n.dir();
-    theme.direction = i18n.dir();
-  };
-
-  useEffect(() => {
-    changeLanguage(locale);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const getRandom = () => {
     const arr = [];
@@ -350,36 +335,7 @@ function App() {
           <Box
             sx={{ flexGrow: 1 }}
           >
-            <AppBar position="static">
-              <Toolbar>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} />
-                <Select
-                  size="small"
-                  value={locale}
-                  label="Language"
-                  onChange={(e) => {
-                    changeLanguage(e.target.value);
-                  }}
-                >
-                  {languages.map((lang) => (<MenuItem key={lang.code} value={lang.code}>{lang.name}</MenuItem>))}
-                </Select>
-                <Tooltip title={t('translate_help')}>
-                  <IconButton sx={{ ml: 2 }} href="https://crowdin.com/project/tonlottery" target="_blank">
-                    <LanguageIcon />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title={t('telegram_support')}>
-                  <IconButton sx={{ ml: 2 }} href="https://t.me/tonlottery_support_bot" target="_blank">
-                    <TelegramIcon />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title={theme.palette.mode === 'dark' ? t('light_mode') : t('dark_mode')}>
-                  <IconButton sx={{ ml: 2 }} onClick={colorMode.toggleColorMode} color="inherit">
-                    {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-                  </IconButton>
-                </Tooltip>
-              </Toolbar>
-            </AppBar>
+            <AppBar />
           </Box>
           <Container component="main" maxWidth="sm">
             <CssBaseline />
