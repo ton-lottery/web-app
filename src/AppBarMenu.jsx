@@ -11,7 +11,7 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import { useTranslation } from 'react-i18next';
 import { ColorModeContext } from './withRoot';
 
-const languages = [{ code: 'en', name: 'English' }, { code: 'ru', name: 'Русский' }];
+const languages = [{ code: 'en', name: 'English' }, { code: 'ru', name: 'Русский' }, { code: 'de', name: 'Deutsch' }];
 
 function AppBarMenu() {
   const { t, i18n } = useTranslation();
