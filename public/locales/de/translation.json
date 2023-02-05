@@ -1,9 +1,9 @@
 {
-  "out_amount": "Already paid:",
-  "total_games": "Total games:",
+  "out_amount": "Bereits bezahlt:",
+  "total_games": "Gesamtspiele:",
   "jackpot": "Jackpot:",
-  "need_choose_numbers": "It remains to choose the numbers:",
-  "win_chance": "Chances of winning:",
+  "need_choose_numbers": "Es bleiben die Zahlen zu wählen:",
+  "win_chance": "Gewinnchancen:",
   "buy_button": "Buy for",
   "clear_choice": "Clear Selection",
   "random_choice": "Choose randomly",
