@@ -6,6 +6,11 @@
     <title>TON Lottery</title>
     <link rel="icon" type="image/x-icon" href="favicon.png">
     <script src="momentum.js"></script>
+    <script>
+      if (typeof navigator.serviceWorker !== 'undefined') {
+        navigator.serviceWorker.register('pwabuilder-sw.js')
+      }
+    </script>
   </head>
   <body style="height: 100%; margin: 0">
   <noscript>You need to enable JavaScript to run this app.</noscript>

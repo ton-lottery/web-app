@@ -1,0 +1,30 @@
+{
+  "background_color": "#ffffff",
+  "description": "TON Lottery is the first numerical decentralized lottery operating in the \"The Open Network\" network.",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Ton Lottery",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "tonlottery",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "categories": [
+    "finance",
+    "games"
+  ],
+  "screenshots": [],
+  "icons": [
+    {
+      "src": "favicon.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "/favicon.ico",
+      "type": "image/x-icon"
+    }
+  ],
+  "shortcuts": [],
+  "lang": "en"
+}
