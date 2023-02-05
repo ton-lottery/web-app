@@ -14,12 +14,12 @@ import { ColorModeContext } from './withRoot';
 const languages = [{ code: 'en', name: 'English' }, { code: 'ru', name: 'Русский' }];
 
 function AppBarMenu() {
+  const { t, i18n } = useTranslation();
   const [locale, setLocale] = React.useState(
-    localStorage.getItem('lng') || languages.find((value) => value.code === 'en').code,
+    localStorage.getItem('lng') || i18n.language.slice(0, 2),
   );
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
-  const { t, i18n } = useTranslation();
   document.body.dir = i18n.dir();
   const changeLanguage = (lng) => {
     setLocale(lng);
