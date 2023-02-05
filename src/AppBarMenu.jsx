@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import {
+  AppBar,
   IconButton, MenuItem, Select, Toolbar, Tooltip, Typography, useTheme,
 } from '@mui/material';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -12,7 +13,7 @@ import { ColorModeContext } from './withRoot';
 
 const languages = [{ code: 'en', name: 'English' }, { code: 'ru', name: 'Русский' }];
 
-function AppBar() {
+function AppBarMenu() {
   const [locale, setLocale] = React.useState(
     localStorage.getItem('lng') || languages.find((value) => value.code === 'en').code,
   );
@@ -66,4 +67,4 @@ function AppBar() {
   );
 }
 
-export default AppBar;
+export default AppBarMenu;

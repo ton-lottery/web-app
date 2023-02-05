@@ -49,7 +49,7 @@ import QrCodeWithLogo from 'qrcode-with-logos';
 import withRoot from './withRoot';
 import factorialize from './utils';
 import Faq from './Faq';
-import AppBar from './AppBar';
+import AppBarMenu from './AppBarMenu';
 import About from './About';
 import HowPlay from './HowPlay';
 
@@ -337,7 +337,7 @@ function App() {
           <Box
             sx={{ flexGrow: 1 }}
           >
-            <AppBar />
+            <AppBarMenu />
           </Box>
           <Container component="main" maxWidth="sm">
             <CssBaseline />
