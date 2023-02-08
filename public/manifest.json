@@ -467,8 +467,8 @@
   "shortcuts": [],
   "lang": "en",
   "display_override": [
-    "browser",
     "fullscreen",
+    "browser",
     "standalone",
     "window-controls-overlay",
     "minimal-ui"
